@@ -50,7 +50,11 @@ char *new(char *string)
 	size = ft_strlen(string);
 	ptr = malloc(size - i + 1);
 	if(!ptr)
+	{
+		free(string);
+		string = NULL;
 		return NULL;
+	}
 		j = 0;
 	while(i < size)
 	{
@@ -59,6 +63,7 @@ char *new(char *string)
 		j++;
 	}
 	ptr[j] = '\0';
+	free(string);
 	return (ptr);
 }
 char	*get_next_line(int fd)
@@ -66,13 +71,21 @@ char	*get_next_line(int fd)
 	static char *string;
 	char *line;
 
-	if(fd < 0 ||  BUFFER_SIZE < 0)
+	if(fd < 0 ||  BUFFER_SIZE < 0 )
 		return NULL;
 	allocation_manager(fd, &string);
-	if(!string)
+	if(!string )
+	{
+		free(string);
+		string = NULL;
 		return(NULL);
+	}
 	if(string[0] == '\0')
+	{
+		free(string);
+		string = NULL;
 		return NULL;
+	}
 	line = here(string);
 	string = new(string);
 	return (line);

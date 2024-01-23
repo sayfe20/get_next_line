@@ -28,14 +28,14 @@ void	allocation_manager(int fd, char **save)
 			*save = NULL;
 			return ;
 		}
-		 if(rd == 0)
-		{
-			// free(buffer);
-			// free(*save);
-			// *save = NULL;
-			// return;
-			break;
-		}
+		//  if(rd == 0)
+		// {
+		// 	// free(buffer);
+		// 	// free(*save);
+		// 	// *save = NULL;
+		// // return;
+		// 	break;	
+		// }
 		buffer[rd] = '\0';
 		*save = ft_strcat(*save,buffer);
 		// printf("%s----", *save);
