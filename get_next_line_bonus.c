@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*here(char *string)
 {
@@ -64,25 +64,25 @@ char	*new_l(char *string)
 
 char	*get_next_line(int fd)
 {
-	static char	*string;
+	static char	*string[OPEN_MAX];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
-	allocation_manager(fd, &string);
-	if (!string)
+	allocation_manager(fd, &string[fd]);
+	if (!string[fd])
 	{
-		free(string);
-		string = NULL;
+		free(string[fd]);
+		string[fd] = NULL;
 		return (NULL);
 	}
-	if (string[0] == '\0')
+	if (string[fd][0] == '\0')
 	{
-		free(string);
-		string = NULL;
+		free(string[fd]);
+		string[fd] = NULL;
 		return (NULL);
 	}
-	line = here(string);
-	string = new_l(string);
+	line = here(string[fd]);
+	string[fd] = new_l(string[fd]);
 	return (line);
 }
