@@ -19,6 +19,8 @@ void	allocation_manager(int fd, char **save)
 
 	rd = 1;
 	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return ;
 	while (rd != 0)
 	{
 		rd = read(fd, buffer, BUFFER_SIZE);
@@ -59,6 +61,8 @@ void	*ft_cpy(char *string, char *string1, int n)
 	int	i;
 
 	i = 0;
+	if (!string || !string1)
+		return (NULL);
 	while (string1[i] && i < n)
 	{
 		string[i] = string1[i];
@@ -71,11 +75,7 @@ void	*ft_cpy(char *string, char *string1, int n)
 char	*ft_strcat(char *string1, char *string2)
 {
 	char	*ptr;
-	int		i;
-	int		j;
 
-	i = 0;
-	j = 0;
 	if (!string1)
 	{
 		string1 = malloc(1);
@@ -89,7 +89,11 @@ char	*ft_strcat(char *string1, char *string2)
 	}
 	ptr = malloc(ft_strlen(string1) + ft_strlen(string2) + 1);
 	if (!ptr)
+	{
+		free(string1);
+		string1 = NULL;
 		return (NULL);
+	}
 	ft_cpy(ptr, string1, ft_strlen(string1));
 	ft_cpy(ptr + ft_strlen(string1), string2, ft_strlen(string2));
 	free(string1);

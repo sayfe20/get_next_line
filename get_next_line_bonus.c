@@ -12,7 +12,7 @@
 
 #include "get_next_line_bonus.h"
 
-char	*here(char *string)
+static char	*here(char *string)
 {
 	char	*ptr;
 	int		i;
@@ -35,7 +35,7 @@ char	*here(char *string)
 	return (ptr);
 }
 
-char	*new_l(char *string)
+static char	*new_l(char *string)
 {
 	int		i;
 	char	*ptr;
@@ -64,10 +64,10 @@ char	*new_l(char *string)
 
 char	*get_next_line(int fd)
 {
-	static char	*string[OPEN_MAX];
+	static char	*string[OPEN_MAX + 1];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE < 0)
+	if (fd < 0 || BUFFER_SIZE < 0 || fd > OPEN_MAX || BUFFER_SIZE > INT_MAX)
 		return (NULL);
 	allocation_manager(fd, &string[fd]);
 	if (!string[fd])

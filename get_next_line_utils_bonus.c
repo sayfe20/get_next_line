@@ -19,6 +19,8 @@ void	allocation_manager(int fd, char **save)
 
 	rd = 1;
 	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return ;
 	while (rd != 0)
 	{
 		rd = read(fd, buffer, BUFFER_SIZE);

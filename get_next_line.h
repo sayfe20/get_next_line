@@ -13,16 +13,13 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2200
+#  define BUFFER_SIZE 10
 # endif
-# include <fcntl.h>
-# include <stdio.h>
+# include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
 
 char	*get_next_line(int fd);
-char	*here(char *string);
-char	*new_l(char *string);
 void	*ft_cpy(char *string, char *string1, int n);
 int		ft_newline_check(char *string);
 int		ft_strlen(char *string);

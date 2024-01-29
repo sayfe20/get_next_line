@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*here(char *string)
+static char	*here(char *string)
 {
 	char	*ptr;
 	int		i;
@@ -30,12 +30,16 @@ char	*here(char *string)
 		i++;
 	ptr = malloc(i + 1);
 	if (!ptr)
+	{
+		free(string);
+		string = NULL;
 		return (NULL);
+	}
 	ft_cpy(ptr, string, i);
 	return (ptr);
 }
 
-char	*new_l(char *string)
+static char	*new_l(char *string)
 {
 	int		i;
 	char	*ptr;
@@ -67,7 +71,7 @@ char	*get_next_line(int fd)
 	static char	*string;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX || BUFFER_SIZE > INT_MAX)
 		return (NULL);
 	allocation_manager(fd, &string);
 	if (!string)
@@ -76,7 +80,7 @@ char	*get_next_line(int fd)
 		string = NULL;
 		return (NULL);
 	}
-	if (string[0] == '\0')
+	if (*string == '\0')
 	{
 		free(string);
 		string = NULL;
